@@ -20,6 +20,6 @@ class Hooks_api extends Hooks
         $args = isset($_POST) ? implode(', ', $_POST) : implode(', ', $_GET);
 
 
-        return $class::$method(implode(', ', $_GET));
+        return $class::$method($args);
     }
 }
