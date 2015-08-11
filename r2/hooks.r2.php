@@ -17,7 +17,7 @@ class Hooks_gerty extends Hooks
         // data results in the necessary args.
         unset($_POST['class'], $_POST['method'], $_GET['class'], $_GET['method']);
 
-        $args = isset($_POST) ? implode(', ', $_POST) : implode(', ', $_GET);
+        $args = !empty($_POST) ? implode(', ', $_POST) : implode(', ', $_GET);
 
 
         return $class::$method($args);
@@ -57,7 +57,7 @@ class Hooks_gerty extends Hooks
             $_GET['method']
         );
 
-        $args = isset($_POST) ? implode(', ', $_POST) : implode(', ', $_GET);
+        $args = !empty($_POST) ? implode(', ', $_POST) : implode(', ', $_GET);
 
 
         return $this->addon->api($addon)->$method($args);
