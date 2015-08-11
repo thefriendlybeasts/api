@@ -1,6 +1,6 @@
 <?php
 
-class Hooks_gerty extends Hooks
+class Hooks_r2 extends Hooks
 {
     /**
      * Call any Statamic API method.
