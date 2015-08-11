@@ -19,8 +19,15 @@ class Hooks_r2 extends Hooks
 
         $args = !empty($_POST) ? implode(', ', $_POST) : implode(', ', $_GET);
 
+        $response = $class::$method($args);
 
-        return $class::$method($args);
+
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'
+        ) {
+            die(json_encode($response));
+        }
+        return $response;
     }
 
 
@@ -59,7 +66,14 @@ class Hooks_r2 extends Hooks
 
         $args = !empty($_POST) ? implode(', ', $_POST) : implode(', ', $_GET);
 
+        $response = $this->addon->api($addon)->$method($args);
 
-        return $this->addon->api($addon)->$method($args);
+
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'
+        ) {
+            die(json_encode($response));
+        }
+        return $response;
     }
 }
