@@ -17,10 +17,9 @@ class Hooks_r2 extends Hooks
         // data results in the necessary args.
         unset($_POST['class'], $_POST['method'], $_GET['class'], $_GET['method']);
 
-        $args = !empty($_POST) ? implode(', ', $_POST) : implode(', ', $_GET);
+        $args = !empty($_POST) ? $_POST : $_GET;
 
-        $response = $class::$method($args);
-
+        $response = call_user_func_array(array($class, $method), $args);
 
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
             strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'
@@ -64,9 +63,9 @@ class Hooks_r2 extends Hooks
             $_GET['method']
         );
 
-        $args = !empty($_POST) ? implode(', ', $_POST) : implode(', ', $_GET);
+        $args = !empty($_POST) ? $_POST : $_GET;
 
-        $response = $this->addon->api($addon)->$method($args);
+        $response = call_user_func_array(array($this->addon->api($addon), $method), $args);
 
 
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
